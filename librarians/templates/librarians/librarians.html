@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+<div class=" bg-success-subtle">
+    <div class='container text-center p-5'>
+        <h2>THE <span class='text-success' style="font-weight: 800;">LIBRARIANS</span></h2>        
+    </div>
+</div>
+
+<div class="container mt-3">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        {% for librarian in librarians %}
+        <div class="col ">
+           
+          <div class="card h-100 ">
+            
+            <div class="card-body">
+              <h5 class="text-success card-title ">{{librarian.name}}</h5>
+              <hr>
+              <p>Username : {{ librarian.username }}</p>
+              <p>Email : {{ librarian.email }}</p>
+              <p>PU ID : {{ librarian.institute_id }}</p>
+              
+            </div>
+       
+
+
+          </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+    
+   
+{% endblock content %}

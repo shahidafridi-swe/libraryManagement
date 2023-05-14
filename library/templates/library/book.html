@@ -1,0 +1,78 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="container text-center mt-3">
+    <div class='d-flex justify-content-between'>
+        <h2 class='text-uppercase '>Feature of {{ book.title }}</h2>
+        <a class='btn btn-outline-success rounded-pill'  href="{% url 'books' %}"> &#10094 </a>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-6">
+            <div class="card mb-3">
+                <div class="card-body text-start">
+                    <h3 class="">{{book.title}}</h3>
+                    <a class='text-decoration-none fst-italic' href="#">Shahid Afridi</a>
+                </div>
+                <img src="{{book.cover_photo.url}}" class="card-img-top" alt="...">
+            </div>             
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 text-start">
+            <div class='row border-bottom border-top'>
+                <p class='col-5'>Status </p>
+                <p class='col-7'>Available</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Accession Number </p>
+                <p class='col-7'>{{book.accession_number}}</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Category</p>
+                <p class='col-7'>{{book.category}}</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Publication </p>
+                <p class='col-7'>{{book.publication}}</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>ISBN </p>
+                <p class='col-7'>{{book.ISBN}}</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>call_number  </p>
+                <p class='col-7'>{{book.call_number}}</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Page Number  </p>
+                <p class='col-7'>{{book.page}}</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Price  </p>
+                <p class='col-7'>{{book.price}} BDT</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Tags </p>
+                <p class='col-7'>{{book.tags}} </p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Attached at   </p>
+                <p class='col-7'>{{book.created_at}} </p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Last Update  </p>
+                <p class='col-7'>{{book.last_updated}} </p>
+            </div>
+           
+            <a class='btn btn-success w-100 my-3' href="{% url 'update-book' book.id %}"> ISSUE </a>
+
+            <a class='btn btn-warning w-100' href="{% url 'update-book' book.id %}"> Update </a>
+            <a class='btn btn-danger w-100 my-3' href="{% url 'delete-book' book.id %}"> Delete </a>
+            
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

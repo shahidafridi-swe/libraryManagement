@@ -1,0 +1,46 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class=" bg-success-subtle">
+    <div class='container text-center pb-5'>
+        <marquee class='pb-3 text-danger'>Library is off now. </marquee>
+        <h2>SEARCH FOR <span class='text-success' style="font-weight: 800;">BOOKS</span></h2>        
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search By Book Title" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn  btn-success" type="button" id="button-addon2">Search</button>
+        </div>
+
+    </div>
+
+</div>
+<div class='container'>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ACCESSION NUMBER</th>
+                    <th>TITLE</th>
+                    <th>AUTHOR</th>
+                    <th>PUBLISHER</th>
+                    <th>BRANCH</th>         
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                <td>{{book.accession_number}}</td>
+                <td>{{book.title}}</td>
+                <td>{{book.author}}</td>
+                <td>{{book.publication}}</td>
+                <td>{{book.branch}}</td>
+                <td><a class="btn btn-success" href="{% url 'book' book.id %}"> View </a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}
