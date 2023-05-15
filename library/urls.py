@@ -8,5 +8,6 @@ urlpatterns = [
     path("book/create-book", views.createBook, name="create-book"),
     path("update-book/<str:pk>/", views.updateBook, name="update-book"),
     path("delete-book/<str:pk>/", views.deleteBook, name="delete-book"),
+    path("update-notice/<str:pk>/", views.noticeUpdate, name="notice-update")
 
 ]

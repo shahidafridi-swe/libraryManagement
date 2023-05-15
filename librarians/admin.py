@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from .models import Librarians
+from .models import Librarian
 
-admin.site.register(Librarians)
+admin.site.register(Librarian)

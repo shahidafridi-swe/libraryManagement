@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Book
+from .models import Book, NoticeBoard
 
 class BookForm(ModelForm):
     class Meta:
@@ -11,3 +11,13 @@ class BookForm(ModelForm):
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
+
+class NoticeBoardForm(ModelForm):
+    class Meta:
+        model = NoticeBoard
+        fields = ['notice']
+
+    def __init__(self, *args, **kwargs):
+        super(NoticeBoardForm, self).__init__(*args, **kwargs)
+
+        self.fields['notice'].widget.attrs.update({'class':'form-control'})

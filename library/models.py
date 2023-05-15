@@ -60,3 +60,11 @@ class BookIssue(models.Model):
 
     def __str__(self):
         return self.person_name
+
+
+class NoticeBoard(models.Model):
+    notice = models.TextField(blank=True, null=True)
+    last_update = models.DateTimeField(auto_now=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True,
+                          primary_key=True, editable=False)
+

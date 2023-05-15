@@ -1,0 +1,37 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container ">
+<div class=" w-75 mt-3 m-auto card bg-light">
+    
+    <div class="card-header d-flex justify-content-between">
+        <h5 class="card-title">Notice Board Form</h5>
+        <a class='btn btn-outline-success rounded-pill'  href="{% url 'books' %}"> &#10094 </a>
+    </div>
+
+    <div class="card-body">      
+        <form method="POST" >
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="mb-3 form-group">
+                    <label for="input" class="form-label">Write here the new notice...</label>
+                        {{field}}                
+                </div>
+            {% endfor %}
+            <input class='btn btn-success float-end w-25' type="submit" value="UPDATE NOTICE">
+        </form>      
+    </div>
+
+    <div class="card-footer text-body-secondary">
+      <h6>Present Notice: {{notice.notice}}</h6>
+      <hr>
+      <p> Updated By: Shahid Afridi</p>
+      <p> Last Update: {{notice.last_update}}</p>
+    </div>
+
+</div>
+</div>
+
+
+
+{% endblock content %}

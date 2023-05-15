@@ -4,9 +4,16 @@
 
 <div class=" bg-success-subtle">
     <div class='container text-center pb-5'>
-        <marquee class='pb-3 text-danger'>Library is off now. </marquee>
+
+        <div class='d-flex pb-3 notice-board'>
+            <marquee class='mt-1 text-danger'>{{notice.notice}} </marquee>            
+            {% if request.user.is_authenticated %}
+            <a class="btn btn-outline-success p-1" href="{% url 'notice-update' notice.id %}"><i class="fa fa-edit" ></i></a>
+            {% endif %}
+        </div>
+        
         <h2>SEARCH FOR <span class='text-success' style="font-weight: 800;">BOOKS</span></h2>        
-        <div class="input-group mb-3">
+        <div class="input-group w-75 m-auto mb-3">
             <input type="text" class="form-control" placeholder="Search By Book Title" aria-label="Recipient's username" aria-describedby="button-addon2">
             <button class="btn  btn-success" type="button" id="button-addon2">Search</button>
         </div>
