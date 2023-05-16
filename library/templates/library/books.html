@@ -5,7 +5,7 @@
 <div class=" bg-success-subtle">
     <div class='container text-center pb-5'>
 
-        <div class='d-flex pb-3 notice-board'>
+        <div class='d-flex w-75 m-auto pb-3 notice-board'>
             <marquee class='mt-1 text-danger'>{{notice.notice}} </marquee>            
             {% if request.user.is_authenticated %}
             <a class="btn btn-outline-success p-1" href="{% url 'notice-update' notice.id %}"><i class="fa fa-edit" ></i></a>

@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="card w-50 mt-1 m-auto bg-success-subtle">
+        <div class="card-body">
+            <form method="POST" action="{% url 'register' %}">
+                <div class='d-flex justify-content-between'>
+                    <h4 class='text-uppercase '>RESISTER A NEW LIBRARIAN</h4>
+                    <a class='btn btn-outline-success rounded-pill'  href="{% url 'librarians' %}"> &#10094 </a>
+                </div>
+              <hr>
+                  {% csrf_token %}
+                  {% for field in form %}
+                      <div class="mb-3 form-group">
+                        <label for="input" class="form-label">{{field.label}}</label>
+                            {{field}}   
+                            
+                            {% for error in field.errors %}
+                            <p class='text-danger'>{{error}}</p>
+                            {% endfor %}
+                      </div>
+                  {% endfor %}
+                  <button type="submit" class="btn btn-success mt-1 w-25">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

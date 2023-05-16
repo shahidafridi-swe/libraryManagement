@@ -9,28 +9,31 @@
     </div>
 </div>
 
-<div class="container mt-3">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="container mt-1">
+  {% if request.user.is_superuser %}
+  <div class="d-flex justify-content-end">
+    <a class="btn btn-outline-success mb-1" href="{% url 'register' %}"><i class="fa fa-plus" aria-hidden="true"></i> Add a Librarian</a>
+  </div>
+  {% endif %}
+  <div class="row row-cols-1 row-cols-md-3 g-4">
 
-        {% for librarian in librarians %}
+      {% for librarian in librarians %}
         <div class="col ">
-           
-          <div class="card h-100 ">
             
+          <div class="card h-100 ">
+        
             <div class="card-body">
               <h5 class="text-success card-title ">{{librarian.name}}</h5>
               <hr>
               <p>Username : {{ librarian.username }}</p>
               <p>Email : {{ librarian.email }}</p>
-              <p>PU ID : {{ librarian.institute_id }}</p>
-              
-            </div>
-       
-
+              <p>PU ID : {{ librarian.institute_id }}</p>              
+            </div>    
 
           </div>
+          
         </div>
-        {% endfor %}
+      {% endfor %}
 
     </div>
 </div>

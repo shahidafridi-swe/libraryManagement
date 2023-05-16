@@ -12,7 +12,8 @@ def createProfile(sender, instance, created, **kwargs):
             user =user,
             username = user.username,
             email = user.email,
-            name = user.first_name
+            name = user.first_name,
+            institute_id = user.institute_id,
         )
 post_save.connect(createProfile, sender=User)
 
