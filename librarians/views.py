@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.admin.views.decorators import user_passes_test
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Librarian
 from .forms import CustomUserCreationForm
@@ -65,3 +66,12 @@ def registerUser(request):
         'form': form
     }
     return render(request, 'librarians/librarian-register.html', context)
+
+
+@login_required(login_url='login')
+def account(request):
+    librarian = request.user.librarian
+    context = {
+        'librarian':librarian
+    }
+    return render(request, 'librarians/account.html', context)
