@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Librarian
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm,ChangePasswordForm
+
 
 def librarians(request):
     librarians = Librarian.objects.all()
@@ -75,3 +76,17 @@ def account(request):
         'librarian':librarian
     }
     return render(request, 'librarians/account.html', context)
+
+
+@login_required(login_url='login')
+def change_password(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your password has changed successfully !')
+            return redirect('account')
+    else:
+        form = ChangePasswordForm(request.user)
+    
+    return render(request, 'librarians/change_password.html', {'form': form})
