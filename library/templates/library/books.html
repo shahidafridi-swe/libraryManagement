@@ -30,24 +30,33 @@
                     <th>TITLE</th>
                     <th>AUTHOR</th>
                     <th>PUBLISHER</th>
-                    <th>BRANCH</th>         
+                    <th>BRANCH</th>   
+                    <th>STATUS</th>      
                     <th>ACTION</th>
                 </tr>
             </thead>
             <tbody>
                 {% for book in books %}
                 <tr>
-                <td>{{book.accession_number}}</td>
-                <td>{{book.title}}</td>
-                <td>{{book.author}}</td>
-                <td>{{book.publication}}</td>
-                <td>{{book.branch}}</td>
-                <td><a class="btn btn-success" href="{% url 'book' book.id %}"> View </a></td>
+                    <td>{{ book.accession_number }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.publication }}</td>
+                    <td>{{ book.branch }}</td>
+                    <td>
+                        {% if book.id in issued_books %}
+                            Not Available 
+                        {% else %}
+                            Available
+                        {% endif %}
+                    </td>
+                    <td><a class="btn btn-success" href="{% url 'book' book.id %}">View</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    
 </div>
 
 {% endblock content %}

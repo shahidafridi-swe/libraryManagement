@@ -18,7 +18,7 @@
                     <div class="mb-3 form-group">
                         <label for="input" class="form-label">{{field.label}}</label>
                         {% if field.name == 'return_date' %}
-                            <input type="text" id="id_return_date" name="return_date" class="form-control datepicker">
+                            <input type="text" id="id_return_date" name="return_date" class="form-control datepicker" required>
                         {% else %}
                             {{field}}
                         {% endif %} 

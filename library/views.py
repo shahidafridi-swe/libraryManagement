@@ -3,13 +3,16 @@ from django.contrib.auth.decorators import login_required
 from .models import Book, BookIssue, NoticeBoard
 from .forms import BookForm, NoticeBoardForm, BookIssueForm
 from django.contrib import messages
+from datetime import date
 
 
 def books(request):
     books = Book.objects.all()
+    issued_books = BookIssue.objects.values_list('book_id', flat=True)
     notice = NoticeBoard.objects.all()[0]
     context = {
         'books': books,
+        'issued_books': issued_books,
         'notice': notice
     }
     return render(request, 'library/books.html', context)
@@ -17,8 +20,13 @@ def books(request):
 
 def book(request, pk):
     book = Book.objects.get(id=pk)
+    issued_book = BookIssue.objects.filter(
+        book=book, return_date__gte=date.today()).first()
+    is_issued = issued_book is not None
     context = {
-        'book': book
+        'book': book,
+        'is_issued': is_issued,
+        'issued_book': issued_book
     }
     return render(request, 'library/book.html', context)
 
@@ -33,7 +41,7 @@ def createBook(request):
             form.save()
             return redirect('books')
     context = {
-        'page':page,
+        'page': page,
         'form': form
     }
     return render(request, 'library/book-form.html', context)
@@ -51,9 +59,9 @@ def updateBook(request, pk):
             form.save()
             return redirect('books')
     context = {
-        'page':page,
+        'page': page,
         'form': form,
-        'book':book
+        'book': book
     }
     return render(request, 'library/book-form.html', context)
 
@@ -102,7 +110,7 @@ def issueBook(request, pk):
             issue.save()
             messages.success(request, "Book issue has successfull!")
             return redirect('issued-books')
-
+      
     context = {
         'book': book,
         'librarian': librarian,
