@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Book, NoticeBoard
-from .forms import BookForm, NoticeBoardForm
-
+from .models import Book, BookIssue, NoticeBoard
+from .forms import BookForm, NoticeBoardForm,BookIssueForm
+from django.contrib import messages
 
 def books(request):
     books = Book.objects.all()
@@ -80,3 +80,48 @@ def noticeUpdate(request, pk):
         'notice': notice
     }
     return render(request, 'library/notice-form.html', context)
+
+def issueBook(request,pk):
+    book = Book.objects.get(id=pk)
+    librarian = request.user.librarian
+    form = BookIssueForm()
+    if request.method == 'POST':
+        form = BookIssueForm(request.POST)
+        if form.is_valid:
+            issue = form.save(commit=False)
+            issue.book = book
+            issue.librarian = librarian
+            issue.save()
+            messages.success(request, "Book issue has successfull!")
+            return redirect('books')
+        
+    context={
+      'book':book,
+      'librarian':librarian,
+      'form':form
+    }
+    return render(request, 'library/book_issue_form.html',context)
+
+def issuedBooks(request):
+    books = BookIssue.objects.all()
+    context = {
+        'books':books
+    }
+    return render(request, 'library/issued_books.html',context)
+
+def issuedBookDetails(request,pk):
+    book = BookIssue.objects.get(id=pk)
+    context = {
+        'book': book
+    }
+    return render(request, 'library/issued_book_details.html', context)
+
+def returnBook(request,pk):
+    book = BookIssue.objects.get(id=pk)
+    if request.method == 'POST':
+        book.delete()
+        return redirect('issued-books')
+    context = {
+        'book': book
+    }
+    return render(request, 'library/return_book.html', context)

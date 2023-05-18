@@ -65,11 +65,12 @@
                 <p class='col-7'>{{book.last_updated}} </p>
             </div>
            
-            <a class='btn btn-success w-100 my-3' href="{% url 'update-book' book.id %}"> ISSUE </a>
+            <div class="d-flex justify-content-between mt-1">
+                <a class='btn btn-success w-25 ' href="{% url 'issue-book' book.id %}"> ISSUE </a>
+                <a class='btn btn-secondary w-25' href="{% url 'update-book' book.id %}"> Update </a>
+                <a class='btn btn-danger w-25' href="{% url 'delete-book' book.id %}"> Delete </a>
+            </div>
 
-            <a class='btn btn-warning w-100' href="{% url 'update-book' book.id %}"> Update </a>
-            <a class='btn btn-danger w-100 my-3' href="{% url 'delete-book' book.id %}"> Delete </a>
-            
         </div>
     </div>
 </div>

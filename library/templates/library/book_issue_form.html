@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class='bg-secondary'>
+    <div class='container d-flex justify-content-center py-3'>
+        <div class="card w-75 bg-success-subtle">
+            <div class="card-header">
+              <h3 class="card-title text-center">Issue for {{book.title}}</h3>
+            </div>
+            <div class="card-body ">
+    
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-3 form-group">
+                        <label for="input" class="form-label">{{field.label}}</label>
+                        {% if field.name == 'return_date' %}
+                            <input type="text" id="id_return_date" name="return_date" class="form-control datepicker">
+                        {% else %}
+                            {{field}}
+                        {% endif %} 
+                        {% for error in field.errors %}
+                            <p class='text-danger'>{{error}}</p>
+                        {% endfor %}             
+                    </div>
+                    {% endfor %}
+                    <input class='btn btn-outline-success w-100' type="submit" value="SUBMIT">
+                </form>
+            </div>
+    
+        </div>
+    </div>
+
+</div>
+{% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <script>
+        $(document).ready(function() {
+            $('.datepicker').datepicker({
+                dateFormat: 'yy-mm-dd',
+                minDate: 0,
+                
+            });
+        });
+    </script>
+{% endblock %}
+
+
+{% endblock content %}

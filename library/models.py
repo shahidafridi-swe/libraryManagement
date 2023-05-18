@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 import uuid
+from librarians.models import Librarian
 
 
 class Book(models.Model):
@@ -25,7 +26,7 @@ class Book(models.Model):
         max_digits=10, decimal_places=2, null=True, blank=True)
     page = models.PositiveIntegerField()
     branch = models.CharField(
-        max_length=2, choices=BRANCH_CHOICE, default='GL')
+        max_length=2, choices=BRANCH_CHOICE, default='GL' , blank=True, null=True)
     location = models.CharField(max_length=255, null=True, blank=True)
     tags = models.CharField(max_length=255, null=True, blank=True)
     cover_photo = models.ImageField(
@@ -44,7 +45,7 @@ class BookIssue(models.Model):
         ("STUDENT", "Student"),
         ("FACULTY", "Faculty"),
     ]
-
+    librarian = models.ForeignKey(Librarian, on_delete=models.PROTECT, null=True, blank=True)
     book = models.OneToOneField(
         Book, on_delete=models.PROTECT, null=True, blank=True)
     person_name = models.CharField(max_length=255)

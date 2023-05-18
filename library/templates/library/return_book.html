@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<p>Are you sure, you want to returned {{ book.book.title }}</p>
+
+<form action="" method='POST'>
+    {% csrf_token %}
+    <a class='btn btn-primary' href="{% url 'issued-book-details' book.id %}">Back</a>
+    
+    <input class='btn btn-danger' type="submit" value="Confirm Returned">
+
+</form>
+
+{% endblock content %}

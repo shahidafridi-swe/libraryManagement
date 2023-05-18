@@ -1,0 +1,73 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="container text-center mt-3">
+    <div class='d-flex justify-content-between'>
+        <h2 class='text-uppercase '>Issue Details of {{ book.book.title }}</h2>
+        <a class='btn btn-outline-success rounded-pill'  href="{% url 'issued-books' %}"> &#10094 </a>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-6">
+            <div class="card mb-3">
+                <div class="card-body text-start">
+                    <h3 class="">{{book.book.title}}</h3>
+                    <p class='text-success fst-italic'>By {{book.book.author}}</p>
+                </div>
+                <img src="{{book.book.cover_photo.url}}" class="card-img-top" alt="...">
+            </div>             
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 text-start">
+            <div class='row border-bottom border-top'>
+                <p class='col-5'>Accession Number </p>
+                <p class='col-7'>{{book.book.accession_number}}</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Person Name</p>
+                <p class='col-7'>{{book.person_name}}</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Person ID </p>
+                <p class='col-7'>{{book.person_id}}</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Person Email </p>
+                <p class='col-7'>{{book.person_email}}</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Person Phone  </p>
+                <p class='col-7'>{{book.person_phone}}</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Person Type </p>
+                <p class='col-7'>{{book.person_type}}</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Issued Librarian  </p>
+                <p class='col-7'>{{book.librarian.name}}</p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Librarian ID </p>
+                <p class='col-7'>{{book.librarian.institute_id}} </p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Issue Date   </p>
+                <p class='col-7'>{{book.issued_date}} </p>
+            </div>
+            <div class='row border-bottom'>
+                <p class='col-5'>Return Date </p>
+                <p class='col-7'>{{book.return_date}} </p>
+            </div>
+           
+            <div class="d-flex justify-content-end mt-2">
+                <a class='btn btn-secondary w-50 ' href="{% url 'return-book' book.id %}"> RETURNED </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
