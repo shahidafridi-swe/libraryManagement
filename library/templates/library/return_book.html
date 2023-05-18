@@ -2,14 +2,24 @@
 
 {% block content %}
 
-<p>Are you sure, you want to returned {{ book.book.title }}</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-7">
+        <div class="card bg-success-subtle">
+            <div class="card-header">
+            <h3>Are you sure, <span class="text-success fst-italic">{{book.person_name}}</span> is returning the <span class="text-success">{{ book.book.title }}</span> book?</h3>
+            </div>
+          <div class="card-body">
+            <form method="POST">
+              {% csrf_token %}
+                <a class='btn btn-success' href="{% url 'issued-book-details' book.id %}">Back</a>              
+                <button type="submit" class="btn btn-danger ">Yes Returned</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<form action="" method='POST'>
-    {% csrf_token %}
-    <a class='btn btn-primary' href="{% url 'issued-book-details' book.id %}">Back</a>
-    
-    <input class='btn btn-danger' type="submit" value="Confirm Returned">
-
-</form>
 
 {% endblock content %}

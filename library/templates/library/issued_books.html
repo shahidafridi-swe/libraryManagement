@@ -38,7 +38,10 @@
                 <td>{{book.person_type}}</td>
                 <td>{{book.issued_date}}</td>
                 <td>{{book.return_date}}</td>
-                <td><a class="btn btn-success" href="{% url 'issued-book-details' book.id %}"> View </a></td>
+                <td>
+                    <a class="btn btn-outline-success" href="{% url 'issued-book-details' book.id %}"> View </a>
+                    <a class='btn btn-outline-secondary w-50 ' href="{% url 'return-book' book.id %}"> RETURN </a>
+                </td>
                 </tr>
                 {% endfor %}
             </tbody>

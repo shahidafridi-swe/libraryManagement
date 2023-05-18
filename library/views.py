@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Book, BookIssue, NoticeBoard
-from .forms import BookForm, NoticeBoardForm,BookIssueForm
+from .forms import BookForm, NoticeBoardForm, BookIssueForm
 from django.contrib import messages
+
 
 def books(request):
     books = Book.objects.all()
@@ -24,6 +25,7 @@ def book(request, pk):
 
 @login_required(login_url='login')
 def createBook(request):
+    page = 'create-book'
     form = BookForm()
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES)
@@ -31,6 +33,7 @@ def createBook(request):
             form.save()
             return redirect('books')
     context = {
+        'page':page,
         'form': form
     }
     return render(request, 'library/book-form.html', context)
@@ -38,6 +41,7 @@ def createBook(request):
 
 @login_required(login_url='login')
 def updateBook(request, pk):
+    page = 'update-book'
     book = Book.objects.get(id=pk)
     form = BookForm(instance=book)
 
@@ -47,7 +51,9 @@ def updateBook(request, pk):
             form.save()
             return redirect('books')
     context = {
-        'form': form
+        'page':page,
+        'form': form,
+        'book':book
     }
     return render(request, 'library/book-form.html', context)
 
@@ -81,7 +87,9 @@ def noticeUpdate(request, pk):
     }
     return render(request, 'library/notice-form.html', context)
 
-def issueBook(request,pk):
+
+@login_required(login_url='login')
+def issueBook(request, pk):
     book = Book.objects.get(id=pk)
     librarian = request.user.librarian
     form = BookIssueForm()
@@ -93,30 +101,36 @@ def issueBook(request,pk):
             issue.librarian = librarian
             issue.save()
             messages.success(request, "Book issue has successfull!")
-            return redirect('books')
-        
-    context={
-      'book':book,
-      'librarian':librarian,
-      'form':form
-    }
-    return render(request, 'library/book_issue_form.html',context)
+            return redirect('issued-books')
 
+    context = {
+        'book': book,
+        'librarian': librarian,
+        'form': form
+    }
+    return render(request, 'library/book_issue_form.html', context)
+
+
+@login_required(login_url='login')
 def issuedBooks(request):
     books = BookIssue.objects.all()
     context = {
-        'books':books
+        'books': books
     }
-    return render(request, 'library/issued_books.html',context)
+    return render(request, 'library/issued_books.html', context)
 
-def issuedBookDetails(request,pk):
+
+@login_required(login_url='login')
+def issuedBookDetails(request, pk):
     book = BookIssue.objects.get(id=pk)
     context = {
         'book': book
     }
     return render(request, 'library/issued_book_details.html', context)
 
-def returnBook(request,pk):
+
+@login_required(login_url='login')
+def returnBook(request, pk):
     book = BookIssue.objects.get(id=pk)
     if request.method == 'POST':
         book.delete()
