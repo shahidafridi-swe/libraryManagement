@@ -4,16 +4,17 @@ from .models import Book, BookIssue, NoticeBoard
 from .forms import BookForm, NoticeBoardForm, BookIssueForm
 from django.contrib import messages
 from datetime import date
-
+from .utils import bookSearch, issuedBookSearch
 
 def books(request):
-    books = Book.objects.all()
+    books, search_query = bookSearch(request)
     issued_books = BookIssue.objects.values_list('book_id', flat=True)
     notice = NoticeBoard.objects.all()[0]
     context = {
         'books': books,
         'issued_books': issued_books,
-        'notice': notice
+        'notice': notice,
+        'search_query':search_query
     }
     return render(request, 'library/books.html', context)
 
@@ -121,9 +122,10 @@ def issueBook(request, pk):
 
 @login_required(login_url='login')
 def issuedBooks(request):
-    books = BookIssue.objects.all()
+    books, search_query = issuedBookSearch(request)
     context = {
-        'books': books
+        'books': books,
+        'search_query':search_query
     }
     return render(request, 'library/issued_books.html', context)
 
