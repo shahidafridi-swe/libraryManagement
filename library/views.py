@@ -4,7 +4,7 @@ from .models import Book, BookIssue, NoticeBoard
 from .forms import BookForm, NoticeBoardForm, BookIssueForm
 from django.contrib import messages
 from datetime import date
-from .utils import bookSearch, issuedBookSearch, paginateBooks
+from .utils import bookSearch, issuedBookSearch, paginateBooks,paginateIssuedBooks
 
 def books(request):
     books, search_query = bookSearch(request)
@@ -126,9 +126,11 @@ def issueBook(request, pk):
 @login_required(login_url='login')
 def issuedBooks(request):
     books, search_query = issuedBookSearch(request)
+    books, custom_range = paginateIssuedBooks(request, books, 1)
     context = {
         'books': books,
-        'search_query':search_query
+        'search_query':search_query,
+        'custom_range':custom_range
     }
     return render(request, 'library/issued_books.html', context)
 
