@@ -13,7 +13,7 @@
         </div>
         
         <h2>SEARCH FOR <span class='text-success' style="font-weight: 800;">BOOKS</span></h2>        
-        <form action="{% url 'books' %}" method='get'>
+        <form id="searchForm" action="{% url 'books' %}" method='get'>
             <div class="input-group w-75 m-auto mb-3">
                 <input type="text" class="form-control" placeholder="Search By Book Title" aria-label="Recipient's username" aria-describedby="button-addon2" name='search_query' value={{search_query}}>
                 <button class="btn  btn-success" type="submit" id="button-addon2">Search</button>
