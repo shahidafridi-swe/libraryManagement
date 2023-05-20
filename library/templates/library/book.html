@@ -69,12 +69,18 @@
                 <p class='col-7'>{{book.last_updated}} </p>
             </div>
             
-           
+            {% if request.user.is_authenticated %}
             <div class="d-flex justify-content-between mt-1">
+                {% if is_issued %}
+                <a class='btn btn-success w-25 disabled' href="{% url 'issue-book' book.id %}"> ISSUE </a>
+                {% else %}
                 <a class='btn btn-success w-25 ' href="{% url 'issue-book' book.id %}"> ISSUE </a>
+                {% endif %}
                 <a class='btn btn-secondary w-25' href="{% url 'update-book' book.id %}"> Update </a>
                 <a class='btn btn-danger w-25' href="{% url 'delete-book' book.id %}"> Delete </a>
             </div>
+            {% endif %}
+
 
         </div>
     </div>

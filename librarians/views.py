@@ -7,7 +7,7 @@ from django.contrib import messages
 from .models import Librarian
 from .forms import CustomUserCreationForm,ChangePasswordForm
 
-
+@login_required(login_url='login')
 def librarians(request):
     librarians = Librarian.objects.all()
     context = {
@@ -40,7 +40,7 @@ def loginUser(request):
 
     return render(request, 'librarians/login.html')
 
-
+@login_required(login_url='login')
 def logoutUser(request):
     logout(request)
     messages.error(request,"Librarian is looged out successfully !")
@@ -48,7 +48,7 @@ def logoutUser(request):
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def registerUser(request):
+def registerUser(request): #ADD LIBRARIAN
     form = CustomUserCreationForm()
 
     if request.method == 'POST':
