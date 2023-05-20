@@ -10,7 +10,7 @@ def books(request):
     books, search_query = bookSearch(request)
     issued_books = BookIssue.objects.values_list('book_id', flat=True)
     notice = NoticeBoard.objects.all()[0]
-    books, custom_range, paginator = paginateBooks(request, books, 1)
+    books, custom_range, paginator = paginateBooks(request, books, 10)
     context = {
         'books': books,
         'issued_books': issued_books,
@@ -126,7 +126,7 @@ def issueBook(request, pk):
 @login_required(login_url='login')
 def issuedBooks(request):
     books, search_query = issuedBookSearch(request)
-    books, custom_range = paginateIssuedBooks(request, books, 1)
+    books, custom_range = paginateIssuedBooks(request, books, 10)
     context = {
         'books': books,
         'search_query':search_query,

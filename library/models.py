@@ -38,6 +38,9 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        ordering = ['accession_number']
 
 
 class BookIssue(models.Model):
@@ -61,6 +64,9 @@ class BookIssue(models.Model):
 
     def __str__(self):
         return self.person_name
+    
+    class Meta:
+        ordering = ['-return_date']
 
 
 class NoticeBoard(models.Model):
