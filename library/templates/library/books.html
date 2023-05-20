@@ -46,9 +46,9 @@
                     <td>{{ book.branch }}</td>
                     <td>
                         {% if book.id in issued_books %}
-                            Not Available 
+                            <span class="text-danger">Issued</span>
                         {% else %}
-                            Available
+                            <span class="text-success">Available</span>
                         {% endif %}
                     </td>
                     <td><a class="btn btn-success" href="{% url 'book' book.id %}">View</a></td>

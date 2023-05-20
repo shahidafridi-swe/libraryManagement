@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Book, BookIssue, NoticeBoard
 from .forms import BookForm, NoticeBoardForm, BookIssueForm
 from django.contrib import messages
-from datetime import date
+from datetime import date, datetime
 from .utils import bookSearch, issuedBookSearch, paginateBooks,paginateIssuedBooks
 
 def books(request):
@@ -126,11 +126,13 @@ def issueBook(request, pk):
 @login_required(login_url='login')
 def issuedBooks(request):
     books, search_query = issuedBookSearch(request)
+    current_date = datetime.now().date()
     books, custom_range = paginateIssuedBooks(request, books, 10)
     context = {
         'books': books,
         'search_query':search_query,
-        'custom_range':custom_range
+        'custom_range':custom_range,
+        'current_date':current_date
     }
     return render(request, 'library/issued_books.html', context)
 

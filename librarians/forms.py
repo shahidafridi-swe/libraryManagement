@@ -26,6 +26,7 @@ class CustomUserCreationForm(UserCreationForm):
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
+            field.widget.attrs['required'] = 'required'
 
 
 class ChangePasswordForm(PasswordChangeForm):

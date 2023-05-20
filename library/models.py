@@ -66,7 +66,7 @@ class BookIssue(models.Model):
         return self.person_name
     
     class Meta:
-        ordering = ['-return_date']
+        ordering = ['return_date']
 
 
 class NoticeBoard(models.Model):

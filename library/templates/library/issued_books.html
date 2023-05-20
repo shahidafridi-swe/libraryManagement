@@ -32,7 +32,7 @@
             </thead>
             <tbody>
                 {% for book in books %}
-                <tr>
+                <tr  {% if book.return_date < current_date %}style="color: red;"{% endif %}>
                 <td>{{book.book.title}}</td>
                 <td>{{book.person_name}}</td>
                 <td>{{book.person_id}}</td>
