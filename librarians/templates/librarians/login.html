@@ -17,7 +17,10 @@
               <label for="password">Password</label>
               <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn btn-success mt-3 w-25">Login</button>
+            <div class='d-flex justify-content-between align-items-center'>
+              <button type="submit" class="btn btn-success mt-3 w-25">Login</button>
+              <a class="text-decoration-none text-success" href="{% url 'reset_password' %}">Forgot Password?</a>
+            </div>
           </form>
         </div>
       </div>
