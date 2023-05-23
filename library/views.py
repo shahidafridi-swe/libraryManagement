@@ -49,7 +49,7 @@ def createBook(request):
         except:
             messages.error(
                 request, 'An error has occurred during book add')
-            
+
     context = {
         'page': page,
         'form': form
@@ -157,6 +157,23 @@ def issuedBooks(request):
         'custom_range': custom_range,
         'current_date': current_date
     }
+    # Send email for expired return dates
+    for book in books:
+        if book.return_date < current_date and not book.email_sent:
+            subject = 'Book Return Reminder'
+            message = f'Dear {book.person_name},\n\n' \
+                f"This is a reminder that the return date for the book '{book.book.title}' " \
+                f"has expired. Please return the book as soon as possible.\n\n" \
+                f"Thank you.\n\n" \
+                f"Library Management"
+            from_email = settings.EMAIL_HOST_USER
+            to_email = [book.person_email]
+            send_mail(subject, message, from_email,
+                      to_email,  fail_silently=False)
+
+            # send_mail_to_person(book)
+            book.email_sent = True
+            book.save()
     return render(request, 'library/issued_books.html', context)
 
 
@@ -174,7 +191,6 @@ def returnBook(request, pk):
     book = BookIssue.objects.get(id=pk)
     current_date = datetime.now().date()
     if request.method == 'POST':
-
         emailSubject = 'Issued Book Return To Library of Presidency University'
         emailBody = f"{book.person_name}, Your issued book has successfully returned.\n You have returned at: {current_date} \n \n Issue Details: \n Book Title: {book.book.title} \n Author: {book.book.author} \n Accession Number: {book.book.accession_number} \n Issue Date: {book.issued_date} \n Return Date: {book.return_date} \n \n Issued by: {book.librarian.name} (ID: {book.librarian.institute_id}) \n PRESIDENCY UNIVERSITY "
         send_mail(

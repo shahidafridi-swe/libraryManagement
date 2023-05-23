@@ -59,6 +59,7 @@ class BookIssue(models.Model):
     person_phone = models.CharField(max_length=11, blank=True, null=True)
     issued_date = models.DateField(auto_now_add=True)
     return_date = models.DateField()
+    email_sent = models.BooleanField(default=False)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
 
