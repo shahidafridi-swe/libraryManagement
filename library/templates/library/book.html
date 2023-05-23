@@ -22,8 +22,10 @@
         <div class="col-12 col-sm-12 col-md-6 text-start">
             <div class='row border-bottom border-top'>
                 <p class='col-5'>Status </p>
-                {% if is_issued %}
-                    <p class='col-7 text-danger'>This book is currently issued and should be returned by {{ issued_book.return_date }}.</p>
+                {% if issued_book %}
+                    {% for book_issue in issued_book %}
+            <p class='col-7 text-danger'>This book is currently issued and should be returned by {{ book_issue.return_date }}.</p>
+        {% endfor %}
                 {% else %}
                     <p class='col-7 text-success'>This book is available for borrowing.</p>
                 {% endif %}
@@ -71,7 +73,7 @@
             
             {% if request.user.is_authenticated %}
             <div class="d-flex justify-content-between mt-1">
-                {% if is_issued %}
+                {% if issued_book %}
                 <a class='btn btn-success w-25 disabled' href="{% url 'issue-book' book.id %}"> ISSUE </a>
                 {% else %}
                 <a class='btn btn-success w-25 ' href="{% url 'issue-book' book.id %}"> ISSUE </a>

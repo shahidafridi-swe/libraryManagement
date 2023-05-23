@@ -53,16 +53,20 @@ def registerUser(request): #ADD LIBRARIAN
 
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.username = user.username.lower()
-            user.institute_id = form.cleaned_data['institute_id']
-            user.save()
+        try:
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.username = user.username.lower()
+                user.institute_id = form.cleaned_data['institute_id']
+                user.save()
 
-            messages.success(request, 'User account has created successfully ! ')
-            return redirect('librarians')
-        else:
+                messages.success(request, 'User account has created successfully ! ')
+                return redirect('librarians')
+            else:
+                messages.error(request, 'An error has occured in registration. Try again with correct information. ')
+        except:
             messages.error(request, 'An error has occured in registration. Try again with correct information. ')
+    
     context = {
         'form': form
     }

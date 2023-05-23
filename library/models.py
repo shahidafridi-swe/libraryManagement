@@ -6,9 +6,9 @@ from librarians.models import Librarian
 
 class Book(models.Model):
     BRANCH_CHOICE = [
-        ('GL', 'Gulshan'),
-        ('BR', 'Baridhara'),
-        ('BN', 'Banani'),
+        ('GULSHAN', 'Gulshan'),
+        ('BARIDAHRA', 'Baridhara'),
+        ('BANANI', 'Banani'),
     ]
 
     accession_number = models.PositiveIntegerField(
@@ -26,7 +26,7 @@ class Book(models.Model):
         max_digits=10, decimal_places=2, null=True, blank=True)
     page = models.PositiveIntegerField()
     branch = models.CharField(
-        max_length=2, choices=BRANCH_CHOICE, default='GL' , blank=True, null=True)
+        max_length=10, choices=BRANCH_CHOICE, default='GULSHAN' , blank=True, null=True)
     location = models.CharField(max_length=255, null=True, blank=True)
     tags = models.CharField(max_length=255, null=True, blank=True)
     cover_photo = models.ImageField(

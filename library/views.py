@@ -28,11 +28,9 @@ def books(request):
 def book(request, pk):
     book = Book.objects.get(id=pk)
     issued_book = BookIssue.objects.filter(
-        book=book, return_date__gte=date.today()).first()
-    is_issued = issued_book is not None
+        book=book)
     context = {
         'book': book,
-        'is_issued': is_issued,
         'issued_book': issued_book
     }
     return render(request, 'library/book.html', context)
@@ -44,9 +42,14 @@ def createBook(request):
     form = BookForm()
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES)
-        if form.is_valid:
-            form.save()
-            return redirect('books')
+        try:
+            if form.is_valid:
+                form.save()
+                return redirect('books')
+        except:
+            messages.error(
+                request, 'An error has occurred during book add')
+            
     context = {
         'page': page,
         'form': form
@@ -62,9 +65,13 @@ def updateBook(request, pk):
 
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES, instance=book)
-        if form.is_valid:
-            form.save()
-            return redirect('books')
+        try:
+            if form.is_valid:
+                form.save()
+                return redirect('books')
+        except:
+            messages.error(
+                request, 'An error has occurred during book add')
     context = {
         'page': page,
         'form': form,
@@ -110,24 +117,27 @@ def issueBook(request, pk):
     form = BookIssueForm()
     if request.method == 'POST':
         form = BookIssueForm(request.POST)
-        if form.is_valid:
-            issue = form.save(commit=False)
-            issue.book = book
-            issue.librarian = librarian
-            issue.save()
-            emailSubject = 'Book Issue From Library of Presidency University'
-            emailBody = f"{issue.person_name} (ID: {issue.person_id}), Your requested book has successfully issued. \n \n Issue Details: \n Book Title: {issue.book.title} \n Author: {issue.book.author} \n Accession Number: {issue.book.accession_number} \n Issue Date: {issue.issued_date} \n Return Date: {issue.return_date} \n \n Issued by: {issue.librarian.name} (ID: {issue.librarian.institute_id}) \n PRESIDENCY UNIVERSITY "
-            send_mail(
-                emailSubject,
-                emailBody,
-                settings.EMAIL_HOST_USER,
-                [issue.person_email],
-                fail_silently=False
-            )
+        try:
+            if form.is_valid:
+                issue = form.save(commit=False)
+                issue.book = book
+                issue.librarian = librarian
+                issue.save()
+                emailSubject = 'Book Issue From Library of Presidency University'
+                emailBody = f"{issue.person_name} (ID: {issue.person_id}), Your requested book has successfully issued. \n \n Issue Details: \n Book Title: {issue.book.title} \n Author: {issue.book.author} \n Accession Number: {issue.book.accession_number} \n Issue Date: {issue.issued_date} \n Return Date: {issue.return_date} \n \n Issued by: {issue.librarian.name} (ID: {issue.librarian.institute_id}) \n PRESIDENCY UNIVERSITY "
+                send_mail(
+                    emailSubject,
+                    emailBody,
+                    settings.EMAIL_HOST_USER,
+                    [issue.person_email],
+                    fail_silently=False
+                )
 
-            messages.success(request, "Book issue has successfull!")
-            return redirect('issued-books')
-
+                messages.success(request, "Book issue has successfull!")
+                return redirect('issued-books')
+        except:
+            messages.error(
+                request, 'An error has occurred during book add')
     context = {
         'book': book,
         'librarian': librarian,
