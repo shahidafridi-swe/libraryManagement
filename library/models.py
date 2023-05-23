@@ -26,7 +26,7 @@ class Book(models.Model):
         max_digits=10, decimal_places=2, null=True, blank=True)
     page = models.PositiveIntegerField()
     branch = models.CharField(
-        max_length=10, choices=BRANCH_CHOICE, default='GULSHAN' , blank=True, null=True)
+        max_length=10, choices=BRANCH_CHOICE, default='GULSHAN', blank=True, null=True)
     location = models.CharField(max_length=255, null=True, blank=True)
     tags = models.CharField(max_length=255, null=True, blank=True)
     cover_photo = models.ImageField(
@@ -38,9 +38,17 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     class Meta:
         ordering = ['accession_number']
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.cover_photo.url
+        except:
+            url = ''
+        return url
 
 
 class BookIssue(models.Model):
@@ -48,7 +56,8 @@ class BookIssue(models.Model):
         ("STUDENT", "Student"),
         ("FACULTY", "Faculty"),
     ]
-    librarian = models.ForeignKey(Librarian, on_delete=models.PROTECT, null=True, blank=True)
+    librarian = models.ForeignKey(
+        Librarian, on_delete=models.PROTECT, null=True, blank=True)
     book = models.OneToOneField(
         Book, on_delete=models.PROTECT, null=True, blank=True)
     person_name = models.CharField(max_length=255)
@@ -65,7 +74,7 @@ class BookIssue(models.Model):
 
     def __str__(self):
         return self.person_name
-    
+
     class Meta:
         ordering = ['return_date']
 
@@ -75,4 +84,3 @@ class NoticeBoard(models.Model):
     last_update = models.DateTimeField(auto_now=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
-
