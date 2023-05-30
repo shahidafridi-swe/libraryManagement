@@ -6,7 +6,7 @@
             aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand w-25 P-0" href="{% url 'books' %}">
+        <a class="navbar-brand w-25 P-0" href="{% url 'home' %}">
             <img style="height: 50px;" class='P-0' src="{% static 'images/pu-logo.png' %}" alt="">
             PU LIBRARY
         </a>
@@ -14,7 +14,7 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
                 <li class="nav-item">
-                    <a class="nav-link {% if request.path == '/' %}text-success fw-bold border border-1 border-success rounded-pill{% endif %}" href="{% url 'books' %}">Books</a>
+                    <a class="nav-link {% if request.path == '/books/' %}text-success fw-bold border border-1 border-success rounded-pill{% endif %}" href="{% url 'books' %}">Books</a>
                 </li>
                 {% if request.user.is_authenticated %}
                 <li class="nav-item ">

@@ -77,6 +77,7 @@ DATABASES = {
         'PASSWORD':'7862'
     }
 }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',

@@ -9,6 +9,23 @@ from datetime import date, datetime
 from .utils import bookSearch, issuedBookSearch, paginateBooks, paginateIssuedBooks
 
 
+def home(request):
+    books, search_query = bookSearch(request)
+    issued_books = BookIssue.objects.values_list('book_id', flat=True)
+    notice = NoticeBoard.objects.all()[0]
+    books, custom_range, paginator = paginateBooks(request, books, 10)
+    context = {
+        'books': books,
+        'issued_books': issued_books,
+        'notice': notice,
+        'search_query': search_query,
+        'custom_range': custom_range,
+        'paginator': paginator,
+     
+    }
+    return render(request, 'library/home.html', context)
+
+
 def books(request):
     books, search_query = bookSearch(request)
     issued_books = BookIssue.objects.values_list('book_id', flat=True)
