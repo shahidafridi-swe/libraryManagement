@@ -54,13 +54,10 @@
                 <p class='col-5'>Page Number  </p>
                 <p class='col-7'>{{book.page}}</p>
             </div>
+            {% if request.user.is_authenticated %}
             <div class='row border-bottom'>
                 <p class='col-5'>Price  </p>
                 <p class='col-7'>{{book.price}} BDT</p>
-            </div>
-            <div class='row border-bottom'>
-                <p class='col-5'>Tags </p>
-                <p class='col-7'>{{book.tags}} </p>
             </div>
             <div class='row border-bottom'>
                 <p class='col-5'>Attached at   </p>
@@ -69,6 +66,12 @@
             <div class='row border-bottom'>
                 <p class='col-5'>Last Update  </p>
                 <p class='col-7'>{{book.last_updated}} </p>
+            </div>
+            {% endif %}
+            
+            <div class='row border-bottom'>
+                <p class='col-5'>Tags </p>
+                <p class='col-7'>{{book.tags}} </p>
             </div>
             
             {% if request.user.is_authenticated %}

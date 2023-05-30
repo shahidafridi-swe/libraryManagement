@@ -16,6 +16,9 @@
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == '/books/' %}text-success fw-bold border border-1 border-success rounded-pill{% endif %}" href="{% url 'books' %}">Books</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/thesis/' %}text-success fw-bold border border-1 border-success rounded-pill{% endif %}" href="#">Thesis</a>
+                </li>
                 {% if request.user.is_authenticated %}
                 <li class="nav-item ">
                     <a class="nav-link {% if request.path == '/create-book/' %}text-success fw-bold border border-1 border-success rounded-pill{% endif %}" href="{% url 'create-book' %}">Add Book</a>
